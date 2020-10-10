@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Login from './components/Login'
 import PrivateRoute from './utils/PrivateRoute'
 import SignUp from './components/SignUp';
+import { CssBaseline } from '@material-ui/core';
 
 
 
@@ -13,10 +14,11 @@ import SignUp from './components/SignUp';
 function App() {
   return (
     <div className="App">
+        <CssBaseline />
 
         <Router>
             <Switch>
-              <Route exact path = '/register' component= {SignUp} />
+              <Route exact path = '/signup' component= {SignUp} />
               <PrivateRoute exact path = '/dashboard' component = {Dashboard} />
               <Route path = '/' component = {Login} />
 
