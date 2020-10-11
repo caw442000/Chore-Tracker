@@ -98,7 +98,7 @@ export const ChildrenList = props => {
       // console.log('childs data',response.data);
       setData(response.data)
 
-      // console.log('new data: ', data);
+      console.log('new data: ', data);
 
     });
   }, []);

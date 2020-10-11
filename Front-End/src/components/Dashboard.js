@@ -25,22 +25,12 @@ import { ChildrenList } from './ChildrenList';
 import ChoreAdder  from './ChoreAdder';
 import AddChild from './AddChild';
 
-import {axiosWithAuth} from '../utils/axiosWithAuth'
-import EditParent from "./EditParent"
+import {axiosWithAuth} from '../utils/axiosWithAuth';
+import EditParent from "./EditParent";
+import DashboardSideBar from "./DashBoardSideBar";
+import Copyright from "./CopyRight"
 
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 const drawerWidth = 240;
 
@@ -210,7 +200,7 @@ const Dashboard = props => {
           onClick={() => logout()}>Logout</Button>
         </Toolbar>
       </AppBar>
-      <Drawer
+      {/* <Drawer
         variant="permanent"
         classes={{
           paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
@@ -223,8 +213,9 @@ const Dashboard = props => {
         <Divider />
         <h4>{data.name}'s CHILDREN</h4>
         {/* <Divider /> */}
-        <ChildrenList />
-      </Drawer>
+        {/* <ChildrenList />
+      </Drawer> */}
+      <DashboardSideBar />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
