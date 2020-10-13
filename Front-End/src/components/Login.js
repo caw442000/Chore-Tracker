@@ -2,7 +2,6 @@ import axios from "axios";
 // import {Link} from 'react-router-dom'
 import React, { useState } from "react";
 
-
 import Button from "@material-ui/core/Button";
 
 import TextField from "@material-ui/core/TextField";
@@ -15,7 +14,9 @@ import { Form, Formik } from "formik";
 import * as yup from "yup";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
+import { loginUser } from "../store/actions";
 
 let SignupSchema = yup.object().shape({
   username: yup.string().required("This field is required."),
@@ -63,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: "600px",
     margin: "0 auto",
-    height: "100vh"
+    height: "100vh",
   },
   container: {
     // width: "100%",
@@ -84,7 +85,7 @@ const useStyles = makeStyles((theme) => ({
     color: "tan",
     opacity: "0.7",
     borderRadius: "25px",
-    border: "2px solid tan"
+    border: "2px solid tan",
   },
   input: {
     color: "tan",
@@ -116,32 +117,17 @@ const Login = (props) => {
     username: "",
     password: "",
   });
-  const history = useHistory()
+  const history = useHistory();
 
-  const FormSubmit = (
-  
+  const  FormSubmit = async(
     values,
     { setSubmitting, resetForm, setStatus, status }
   ) => {
     // console.log(values);
 
-    axios
-      .post("https://choretracker01.herokuapp.com/api/auth/login", values)
-      .then((res) => {
-        console.log("success", res);
-        console.log("this is response data", res.data);
-        console.log("initial values", initialValues);
-
-        values = {
-          username: "",
-          password: "",
-        };
-        setStatus(res.data);
-        localStorage.setItem("token", res.data.token);
-        localStorage.setItem("id", res.data.id);
-        history.push("/dashboard"); // Redirect to Dashboard
-      })
-      .catch((error) => console.log(error.response, "Didn't work"));
+    await props.loginUser(values);
+    console.log("push to dashboard")
+    history.push("/dashboard"); // Redirect to Dashboard
   };
 
   return (
@@ -239,4 +225,10 @@ const Login = (props) => {
   );
 };
 
-export default Login;
+const mapStateToProps = (state) => {
+  return {
+    isFetchingData: state.isFetchingData,
+  };
+};
+
+export default connect(mapStateToProps, { loginUser })(Login);
