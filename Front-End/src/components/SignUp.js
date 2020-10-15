@@ -13,6 +13,10 @@ import { Link } from "react-router-dom";
 import { Formik, Form } from "formik";
 import * as yup from "yup";
 
+import { connect } from "react-redux";
+
+import { signUpUser } from "../store/actions";
+
 let SignupSchema = yup.object().shape({
   name: yup.string().required("This field is required."),
   username: yup.string().required("This field is required."),
@@ -122,31 +126,15 @@ const SignUp = (props) => {
   });
   const history = useHistory();
 
-  const FormSubmit = (
+  const FormSubmit = async(
     values,
     { setSubmitting, resetForm, setStatus, status }
   ) => {
     // console.log(values);
 
-    axios
-      .post("https://choretracker01.herokuapp.com/api/auth/register", values)
-      .then((res) => {
-        console.log("success", res);
-        console.log("this is response data", res.data);
-        console.log("initial values", initialValues);
-
-        values = {
-          name: "",
-          username: "",
-          email: "",
-          password: "",
-        };
-        setStatus(res.data);
-        localStorage.setItem("token", res.data.token);
-        localStorage.setItem("id", res.data.id);
-        history.push("/dashboard"); // Redirect to Dashboard
-      })
-      .catch((error) => console.log(error.response, "Didn't work"));
+    await props.signUpUser(values);
+    console.log("push to dashboard")
+    history.push("/dashboard"); // Redirect to Dashboard
   };
 
   return (
@@ -282,4 +270,9 @@ const SignUp = (props) => {
   );
 };
 
-export default SignUp;
+const mapStateToProps = (state) => {
+  return {
+    isFetchingData: state.isFetchingData,
+  };
+};
+export default connect(mapStateToProps, { signUpUser })(SignUp);

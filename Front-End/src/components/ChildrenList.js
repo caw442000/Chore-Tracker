@@ -22,6 +22,10 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import Button from '@material-ui/core/Button';
 
 
+import { connect } from "react-redux";
+
+import { loginUser } from "../store/actions";
+
 
 const useStyles = makeStyles(theme => ({
   root: {

@@ -11,10 +11,12 @@ import { CssBaseline } from "@material-ui/core";
 import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
+import logger from 'redux-logger'
+
 
 import { userReducer } from "./store/reducers";
 
-const store = createStore(userReducer, applyMiddleware(thunk));
+const store = createStore(userReducer, applyMiddleware(thunk, logger));
 
 function App() {
   return (
