@@ -8,15 +8,22 @@ import PrivateRoute from "./utils/PrivateRoute";
 import SignUp from "./components/SignUp";
 import { CssBaseline } from "@material-ui/core";
 
-import { createStore, applyMiddleware } from "redux";
+import { createStore, combineReducers, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import logger from 'redux-logger'
 
 
-import { userReducer } from "./store/reducers";
+import { userReducer, childReducer } from "./store/reducers";
 
-const store = createStore(userReducer, applyMiddleware(thunk, logger));
+const rootReducer = combineReducers({
+  user: userReducer,
+  children: childReducer
+
+})
+
+
+const store = createStore(rootReducer, applyMiddleware(thunk, logger));
 
 function App() {
   return (

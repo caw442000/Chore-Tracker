@@ -18,7 +18,8 @@ import MailIcon from "@material-ui/icons/Mail";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-import { ChildrenList } from './ChildrenList';
+import ChildrenList from './ChildrenList';
+import { connect } from 'react-redux';
 
 //CSS Styles
 
@@ -71,9 +72,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DashboardSideBar = () => {
+const DashboardSideBar = (props) => {
   const classes = useStyles();
   const history = useHistory();
+  const pass = "pass prop";
+  console.log("state passed from map", props.children)
 
   return (
     <MUIDrawer
@@ -120,4 +123,12 @@ const DashboardSideBar = () => {
   );
 };
 
-export default DashboardSideBar;
+function mapStateToProps(state){
+  console.log("this is state", state);
+  return {
+    isFetching: state.children.isFetching,
+    children: state.children.children || [],
+  };
+};
+export default connect(
+  mapStateToProps, null)(DashboardSideBar);

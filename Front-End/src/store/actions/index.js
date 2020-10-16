@@ -1,3 +1,4 @@
 import { loginUser, signUpUser } from './userAction';
 
-export { loginUser, signUpUser };
+import { addChild } from './childAction';
+export { loginUser, signUpUser, addChild };

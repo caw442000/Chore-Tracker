@@ -226,8 +226,10 @@ const Login = (props) => {
 };
 
 const mapStateToProps = (state) => {
+  console.log("this is state in login", state)
   return {
     isFetchingData: state.isFetchingData,
+    children: state.children.children,
   };
 };
 

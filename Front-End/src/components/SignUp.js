@@ -271,8 +271,10 @@ const SignUp = (props) => {
 };
 
 const mapStateToProps = (state) => {
+  console.log("this is state in signup", state)
   return {
     isFetchingData: state.isFetchingData,
+    children: state.children.children,
   };
 };
 export default connect(mapStateToProps, { signUpUser })(SignUp);

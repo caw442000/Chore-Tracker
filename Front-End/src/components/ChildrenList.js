@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {axiosWithAuth} from "../utils/axiosWithAuth";
+import { connect } from "react-redux";
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -22,9 +23,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import Button from '@material-ui/core/Button';
 
 
-import { connect } from "react-redux";
 
-import { loginUser } from "../store/actions";
 
 
 const useStyles = makeStyles(theme => ({
@@ -85,7 +84,7 @@ const useStyles = makeStyles(theme => ({
 
 
 
-export const ChildrenList = props => {
+const ChildrenList = (props) => {
   const [choresList, setChoresList]= useState(null);
   const classes = useStyles();
   const [data, setData] = useState(null);
@@ -94,18 +93,28 @@ export const ChildrenList = props => {
 
   useEffect( () => {
 
-    axiosWithAuth()
-    .get(`/api/parent/children/${id}`)
-    .then(response => {
-      // console.log('child list response: ', response);
-      // console.log('childs data length',response.data.length);
-      // console.log('childs data',response.data);
-      setData(response.data)
+    console.log("useef", props.children)
+    if(props.children === null) {
 
-      console.log('new data: ', data);
 
-    });
-  }, []);
+      axiosWithAuth()
+      .get(`/api/parent/children/${id}`)
+      .then(response => {
+        // console.log('child list response: ', response);
+        // console.log('childs data length',response.data.length);
+        // console.log('childs data',response.data);
+        setData(response.data)
+  
+        console.log('new data: ', data);
+    })
+
+    } else {
+      setData(props.children)
+    }
+    
+  }, [props.children]);
+
+
 
   return (
     <div className={classes.root}>
@@ -149,4 +158,12 @@ export const ChildrenList = props => {
   );
 };
 
-export default ChildrenList;
+function mapStateToProps(state){
+  console.log("this is state", state);
+  return {
+    isFetching: state.children.isFetching,
+    children: state.children.children || [],
+  };
+};
+export default connect(
+  mapStateToProps, null)(ChildrenList);
