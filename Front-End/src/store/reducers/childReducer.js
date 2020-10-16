@@ -2,12 +2,15 @@ import {
   ADD_CHILD_START,
   ADD_CHILD_SUCCESS,
   ADD_CHILD_FAILURE,
-
+  SET_CHILDREN_START,
+  SET_CHILDREN_SUCCESS,
+  SET_CHILDREN_FAILURE,
 } from "../actions/childAction";
 
 export const initialState = {
   error: "",
   isFetching: false,
+  isFetchingChildren: false,
   children: [],
 };
 
@@ -22,14 +25,33 @@ export const childReducer = (state = initialState, action) => {
       return {
         ...state,
         isFetching: false,
-        children: action.payload,
       };
+      
     case ADD_CHILD_FAILURE:
       return {
         ...state,
         isFetching: false,
         error: action.payload,
       };
+
+      case SET_CHILDREN_START:
+        return {
+          ...state,
+          isFetchingChildren: true,
+        };
+      case SET_CHILDREN_SUCCESS:
+        return {
+          ...state,
+          isFetchingChildren: false,
+          children: action.payload,
+        };
+        
+      case SET_CHILDREN_FAILURE:
+        return {
+          ...state,
+          isFetchingChildren: false,
+          error: action.payload,
+        };
     default:
       return state;
   }

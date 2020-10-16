@@ -22,7 +22,7 @@ import { Formik, Form } from "formik";
 import * as yup from "yup";
 import { connect } from "react-redux";
 
-import { addChild } from "../store/actions";
+import { addChild, setChildren } from "../store/actions";
 
 let SignupSchema = yup.object().shape({
   name: yup.string().required("This field is required."),
@@ -105,7 +105,9 @@ const AddChild = (props) => {
   const FormSubmit = async(e) => {
     e.preventDefault();
     console.log("These are values", childinfo);
-    await props.addChild(childinfo, id)
+    await props.addChild(childinfo)
+    await props.setChildren()
+
     handleClose();
   };
 
@@ -235,4 +237,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { addChild })(AddChild);
+export default connect(mapStateToProps, { addChild, setChildren })(AddChild);

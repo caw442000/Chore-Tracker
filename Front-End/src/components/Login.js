@@ -16,7 +16,7 @@ import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { loginUser } from "../store/actions";
+import { loginUser, setChildren } from "../store/actions";
 
 let SignupSchema = yup.object().shape({
   username: yup.string().required("This field is required."),
@@ -126,6 +126,7 @@ const Login = (props) => {
     // console.log(values);
 
     await props.loginUser(values);
+    await props.setChildren()
     console.log("push to dashboard")
     history.push("/dashboard"); // Redirect to Dashboard
   };
@@ -233,4 +234,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { loginUser })(Login);
+export default connect(mapStateToProps, { loginUser, setChildren })(Login);

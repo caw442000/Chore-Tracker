@@ -15,7 +15,7 @@ import * as yup from "yup";
 
 import { connect } from "react-redux";
 
-import { signUpUser } from "../store/actions";
+import { signUpUser, setChildren } from "../store/actions";
 
 let SignupSchema = yup.object().shape({
   name: yup.string().required("This field is required."),
@@ -133,6 +133,7 @@ const SignUp = (props) => {
     // console.log(values);
 
     await props.signUpUser(values);
+    await props.setChildren();
     console.log("push to dashboard")
     history.push("/dashboard"); // Redirect to Dashboard
   };
@@ -277,4 +278,4 @@ const mapStateToProps = (state) => {
     children: state.children.children,
   };
 };
-export default connect(mapStateToProps, { signUpUser })(SignUp);
+export default connect(mapStateToProps, { signUpUser, setChildren })(SignUp);
