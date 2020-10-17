@@ -28,7 +28,11 @@ import AddChild from './AddChild';
 import {axiosWithAuth} from '../utils/axiosWithAuth';
 import EditParent from "./EditParent";
 import DashboardSideBar from "./DashBoardSideBar";
-import Copyright from "./CopyRight"
+import Copyright from "./CopyRight";
+
+import { connect } from "react-redux";
+
+import { resetChildren } from "../store/actions";
 
 
 
@@ -130,8 +134,6 @@ const useStyles = makeStyles(theme => ({
 
 const Dashboard = props => {
 
-
-
   const id = localStorage.getItem('id');
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
@@ -148,21 +150,22 @@ const Dashboard = props => {
   const fixedNavHeightPaper = clsx(classes.navpaper, classes.fixedNavHeight);
 
 
-  useEffect(() => {
+  // useEffect(() => {
 
-      axiosWithAuth()
-      .get (`/api/parent/${id}`)
-      .then(res => {
-        console.log('res.data: ',res.data)
-        setData(res.data)
+  //     axiosWithAuth()
+  //     .get (`/api/parent/${id}`)
+  //     .then(res => {
+  //       console.log('res.data: ',res.data)
+  //       setData(res.data)
 
-      })
-      .catch(err => console.log(err))
+  //     })
+  //     .catch(err => console.log(err))
 
-  }, [])
+  // }, [])
 
-  const logout = () => {
+  const logout = async() => {
     localStorage.clear()
+    await props.resetChildren()
     history.push('/login')
   }
 
@@ -182,7 +185,7 @@ const Dashboard = props => {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            {data.name} Chore Tracker
+            {props.user.name} Chore Tracker
           </Typography>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
@@ -190,31 +193,16 @@ const Dashboard = props => {
             </Badge>
           </IconButton>
           <EditParent
-          id={data.id}
-          name={data.name}
-          username={data.username}
-          email={data.email}
+          id={props.user.id}
+          name={props.user.name}
+          username={props.user.username}
+          email={props.user.email}
           />
           <Button
           color="primary"
           onClick={() => logout()}>Logout</Button>
         </Toolbar>
       </AppBar>
-      {/* <Drawer
-        variant="permanent"
-        classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-        }}
-        open={open}
-      >
-        <div className={classes.toolbarIcon}>
-          LIST OF CHILDREN
-        </div>
-        <Divider />
-        <h4>{data.name}'s CHILDREN</h4>
-        {/* <Divider /> */}
-        {/* <ChildrenList />
-      </Drawer> */}
       <DashboardSideBar />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
@@ -231,7 +219,7 @@ const Dashboard = props => {
             </Grid>
             <Grid item xs={12} md={8} lg={9}>
               <Paper className={fixedHeightPaper}>
-                <h2>Family Chore List</h2>
+                <Typography component="h2" >Family Chore List</Typography>
                 <ChoreList/>
               </Paper>
             </Grid>
@@ -251,4 +239,11 @@ const Dashboard = props => {
     </div>
   );
 };
-export default Dashboard;
+
+const mapStateToProps = (state) => {
+  console.log("this is state in login", state)
+  return {
+    user: state.user.user,
+  };
+};
+export default connect(mapStateToProps, {resetChildren})(Dashboard);

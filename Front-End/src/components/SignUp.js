@@ -133,11 +133,15 @@ const SignUp = (props) => {
     // console.log(values);
 
     await props.signUpUser(values);
-    await props.setChildren();
+    SetChildrenArray();
+
     console.log("push to dashboard")
     history.push("/dashboard"); // Redirect to Dashboard
   };
 
+  const SetChildrenArray = async() => {
+    await props.setChildren()
+  }
   return (
     <Container className={classes.container} component="main" maxWidth="xs">
       <div className={classes.paper}>

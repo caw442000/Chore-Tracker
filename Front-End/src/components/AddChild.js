@@ -106,10 +106,14 @@ const AddChild = (props) => {
     e.preventDefault();
     console.log("These are values", childinfo);
     await props.addChild(childinfo)
-    await props.setChildren()
-
+    SetChildrenArray();
+    setChildinfo(initialValues)
     handleClose();
   };
+
+  const SetChildrenArray = async() => {
+    await props.setChildren()
+  }
 
   return (
     <Container component="main" maxWidth="xs">

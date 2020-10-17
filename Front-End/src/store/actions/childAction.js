@@ -7,6 +7,7 @@ export const ADD_CHILD_FAILURE = "ADD_CHILD_FAILURE";
 export const SET_CHILDREN_START = "SET_CHILDREN_START";
 export const SET_CHILDREN_SUCCESS = "SET_CHILDREN_SUCCESS";
 export const SET_CHILDREN_FAILURE = "SET_CHILDREN_FAILURE";
+export const RESET_CHILDREN_SUCCESS = "RESET_CHILDREN_SUCCESS";
 
 const id = localStorage.getItem('id');
 
@@ -38,4 +39,8 @@ export const setChildren = () => async (dispatch) => {
         dispatch({ type: SET_CHILDREN_FAILURE, payload: err });
         console.log(err.response);
       });
+};
+
+export const resetChildren = () => async (dispatch) => {
+      dispatch({ type: RESET_CHILDREN_SUCCESS});
 };

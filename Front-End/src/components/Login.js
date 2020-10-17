@@ -126,10 +126,15 @@ const Login = (props) => {
     // console.log(values);
 
     await props.loginUser(values);
-    await props.setChildren()
+    SetChildrenArray()
+    
     console.log("push to dashboard")
     history.push("/dashboard"); // Redirect to Dashboard
   };
+
+  const SetChildrenArray = async() => {
+    await props.setChildren()
+  }
 
   return (
     <Container className={classes.container} component="main" maxWidth="xs">
