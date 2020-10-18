@@ -1,4 +1,4 @@
 import { userReducer } from './userReducer';
 import { childReducer } from './childReducer';
-
-export {userReducer, childReducer};
+import { choreReducer } from './choreReducer'
+export {userReducer, childReducer, choreReducer};

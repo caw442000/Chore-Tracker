@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from 'react';
+import { connect } from "react-redux";
+
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -9,6 +11,9 @@ import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 
 import { axiosWithAuth } from '../utils/axiosWithAuth'
+
+import { setChores } from '../store/actions';
+
 
 function Copyright() {
   return (
@@ -58,7 +63,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-export const ChoreList = props => {
+const ChoreList = props => {
   const [choresList, setChoresList]= useState([]);
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
@@ -85,13 +90,15 @@ export const ChoreList = props => {
   const fixedNavHeightPaper = clsx(classes.navpaper, classes.fixedNavHeight);
 
   useEffect(() => {
-    axiosWithAuth()
-    .get(`/api/chores/${id}`)
-    .then(res => {
-      console.log('After effect: ', res)
-      setChoresList(res.data);
-    })
-    .catch(err => console.log(err))
+    // axiosWithAuth()
+    // .get(`/api/chores/${id}`)
+    // .then(res => {
+    //   console.log('After effect: ', res)
+    //   setChoresList(res.data);
+    // })
+    // .catch(err => console.log(err))
+
+    props.setChores(props.user.id)
 
 
   }, [])
@@ -103,15 +110,16 @@ export const ChoreList = props => {
         <Container maxWidth="lg" className={classes.container}>
           <Grid item xs={12} md={8} lg={9}>
             {
-                !choresList ? (
+                !props.chores ? (
                   <h2>No Chores Added</h2>
                 ):(
-                  choresList.map(chore => (
+                  props.chores.map(chore => (
                     <ul
                     key={chore}
                     choreid={chore.id}
                     >
                     {chore.name}
+                    {chore.description}
                     <span onClick={() => deleteChore(chore)}>❌</span></ul>
                   ))
                 )
@@ -124,4 +132,14 @@ export const ChoreList = props => {
   );
 };
 
-export default ChoreList
+function mapStateToProps(state){
+  console.log("this is state in chores", state);
+  return {
+    isFetching: state.chores.isFetching,
+    chores: state.chores.chores || [],
+    user: state.user.user
+  };
+};
+
+export default connect(
+  mapStateToProps, {setChores}) (ChoreList);

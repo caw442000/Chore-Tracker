@@ -128,20 +128,8 @@ const Login = (props) => {
     values,
     { setSubmitting, resetForm, setStatus, status }
   ) => {
-    // console.log(values);
-    // await props.resetUser()
-    // await props.resetChildren()
     
     await props.loginUser(values);
-
-    // setId(id)
-
-    
-    // // SetChildrenArray()
- 
-    
-
-    console.log("push to dashboard")
     history.push("/dashboard"); // Redirect to Dashboard
   };
 

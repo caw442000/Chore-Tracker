@@ -14,11 +14,12 @@ import thunk from "redux-thunk";
 import logger from 'redux-logger'
 
 
-import { userReducer, childReducer } from "./store/reducers";
+import { userReducer, childReducer, choreReducer } from "./store/reducers";
 
 const rootReducer = combineReducers({
   user: userReducer,
-  children: childReducer
+  children: childReducer,
+  chores: choreReducer
 
 })
 

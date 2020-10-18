@@ -19,6 +19,10 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import {ChildrenList} from './ChildrenList';
 
+import { connect } from "react-redux";
+
+import { addChore, setChores } from "../store/actions";
+
 
 import { Formik, Form } from "formik";
 import * as yup from "yup";
@@ -92,19 +96,34 @@ const ChoreAdder = props => {
 
 
 
-  const FormSubmit = () => {
-    console.log("These are values", chores);
-    axiosWithAuth()
-      .post(`/api/chores/${id}`, chores)
-        .then(res => {
-          // console.log("success", res);
-          // console.log("this is response data", res.data)
-          // console.log("data imported from children list", ChildrenList.data)
-          setOpen(false);
-        })
-        .catch(error => console.log(error.response, "Didn't work"));
+  // const FormSubmit = () => {
+  //   console.log("These are values", chores);
+  //   // axiosWithAuth()
+  //   //   .post(`/api/chores/${id}`, chores)
+  //   //     .then(res => {
+  //   //       // console.log("success", res);
+  //   //       // console.log("this is response data", res.data)
+  //   //       // console.log("data imported from children list", ChildrenList.data)
+          
+  //   //     })
+  //   //     .catch(error => console.log(error.response, "Didn't work"));
 
+  //       setOpen(false);
+
+  // };
+
+  const FormSubmit = async(e) => {
+    e.preventDefault();
+    console.log("These are values", chores);
+    await props.addChore(chores, props.user.id)
+    SetChoresArray(props.user.id);
+    setChores(initialValues)
+    handleClose();
   };
+
+  const SetChoresArray = async(id) => {
+    await props.setChores(id)
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -200,4 +219,11 @@ const ChoreAdder = props => {
   );
 };
 
-export default ChoreAdder;
+const mapStateToProps = (state) => {
+  return {
+    isFetchingData: state.isFetchingData,
+    user: state.user.user
+  };
+};
+
+export default connect(mapStateToProps, { addChore, setChores })(ChoreAdder);

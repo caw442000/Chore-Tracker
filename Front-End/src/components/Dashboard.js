@@ -20,7 +20,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Button from '@material-ui/core/Button';
-import { ChoreList } from './ChoreList';
+import ChoreList  from './ChoreList';
 import { ChildrenList } from './ChildrenList';
 import ChoreAdder  from './ChoreAdder';
 import AddChild from './AddChild';
@@ -195,7 +195,7 @@ const Dashboard = props => {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            {props.user.name} Chore Tracker
+            {props?.user?.name} Chore Tracker
           </Typography>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
@@ -203,10 +203,10 @@ const Dashboard = props => {
             </Badge>
           </IconButton>
           <EditParent
-          id={props.user.id}
-          name={props.user.name}
-          username={props.user.username}
-          email={props.user.email}
+          id={props?.user?.id}
+          name={props?.user?.name}
+          username={props?.user?.username}
+          email={props?.user?.email}
           />
           <Button
           color="primary"
