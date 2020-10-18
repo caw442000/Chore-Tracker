@@ -32,7 +32,7 @@ import Copyright from "./CopyRight";
 
 import { connect } from "react-redux";
 
-import { resetChildren } from "../store/actions";
+import { resetChildren, resetUser, setChildren } from "../store/actions";
 
 
 
@@ -165,9 +165,19 @@ const Dashboard = props => {
 
   const logout = async() => {
     localStorage.clear()
-    await props.resetChildren()
+    // localStorage.removeItem('id');
+    // localStorage.removeItem('token');
+    
+    // await props.resetChildren();
+ 
+
+    
+    
     history.push('/login')
   }
+
+    
+ 
 
 
   return (
@@ -246,4 +256,4 @@ const mapStateToProps = (state) => {
     user: state.user.user,
   };
 };
-export default connect(mapStateToProps, {resetChildren})(Dashboard);
+export default connect(mapStateToProps, {resetChildren, resetUser, setChildren})(Dashboard);

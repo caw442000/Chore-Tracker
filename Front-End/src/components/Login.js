@@ -1,6 +1,6 @@
 import axios from "axios";
 // import {Link} from 'react-router-dom'
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Button from "@material-ui/core/Button";
 
@@ -15,8 +15,10 @@ import * as yup from "yup";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import {axiosWithAuth} from "../utils/axiosWithAuth";
 
-import { loginUser, setChildren } from "../store/actions";
+
+import { loginUser, setChildren, resetChildren, resetUser } from "../store/actions";
 
 let SignupSchema = yup.object().shape({
   username: yup.string().required("This field is required."),
@@ -118,23 +120,57 @@ const Login = (props) => {
     password: "",
   });
   const history = useHistory();
+  // const [id, setId] = useState("")
+
+
 
   const  FormSubmit = async(
     values,
     { setSubmitting, resetForm, setStatus, status }
   ) => {
     // console.log(values);
-
-    await props.loginUser(values);
-    SetChildrenArray()
+    // await props.resetUser()
+    // await props.resetChildren()
     
+    await props.loginUser(values);
+
+    // setId(id)
+
+    
+    // // SetChildrenArray()
+ 
+    
+
     console.log("push to dashboard")
     history.push("/dashboard"); // Redirect to Dashboard
   };
 
-  const SetChildrenArray = async() => {
-    await props.setChildren()
+  const SetChildrenArray = () => {
+    props.setChildren()
   }
+
+  // useEffect( () => {
+
+  //   console.log("useef", props.children)
+  //   if(!props.children && props.user) {
+
+
+  //     axiosWithAuth()
+  //     .get(`/api/parent/children/${props.user.id}`)
+  //     .then(response => {
+  //       // console.log('child list response: ', response);
+  //       // console.log('childs data length',response.data.length);
+  //       // console.log('childs data',response.data);
+        
+  
+  //       console.log('newchildren: ', response);
+  //   })
+
+  //   } 
+    
+    
+  // }, [props.user]);
+  
 
   return (
     <Container className={classes.container} component="main" maxWidth="xs">
@@ -236,7 +272,9 @@ const mapStateToProps = (state) => {
   return {
     isFetchingData: state.isFetchingData,
     children: state.children.children,
+    user: state.user,
+
   };
 };
 
-export default connect(mapStateToProps, { loginUser, setChildren })(Login);
+export default connect(mapStateToProps, { loginUser, setChildren, resetChildren, resetUser })(Login);

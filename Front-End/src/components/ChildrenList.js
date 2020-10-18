@@ -21,6 +21,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Button from '@material-ui/core/Button';
+import { setChildren } from '../store/actions';
 
 
 
@@ -88,31 +89,35 @@ const ChildrenList = (props) => {
   const [choresList, setChoresList]= useState(null);
   const classes = useStyles();
   const [data, setData] = useState(null);
-  const id = localStorage.getItem('id');
 
 
   useEffect( () => {
 
-    console.log("useef", props.children)
-    if(props.children === null) {
+    // console.log("useef", props.children)
+    // console.log("props.user.id", props.user.id)
+    // if(props.user) {
 
 
-      axiosWithAuth()
-      .get(`/api/parent/children/${id}`)
-      .then(response => {
-        // console.log('child list response: ', response);
-        // console.log('childs data length',response.data.length);
-        // console.log('childs data',response.data);
-        setData(response.data)
+    //   axiosWithAuth()
+    //   .get(`/api/parent/children/${props.user.id}`)
+    //   .then(response => {
+    //     // console.log('child list response: ', response);
+    //     // console.log('childs data length',response.data.length);
+    //     // console.log('childs data',response.data);
+    //     setData(response.data)
   
-        console.log('new data: ', data);
-    })
+    //     console.log('new data: ', data);
+    // })
 
-    } else {
-      setData(props.children)
-    }
+    // }
     
-  }, [props.children]);
+
+    // console.log('on childrens list ', data);
+    props.setChildren(props.user.id)
+
+
+    
+  }, []);
 
 
 
@@ -128,10 +133,10 @@ const ChildrenList = (props) => {
             <Paper className={classes.ulflex}>
 
               {
-                !data ? (
+                !props.children ? (
                   <h2>No Children</h2>
                 ):(
-                  data.map(data => (
+                  props.children.map(data => (
                     <div key={data.id}>
                     <h4>{data.name}</h4>
                     <h4 >Total Points: {data.total_points}</h4>
@@ -163,7 +168,8 @@ function mapStateToProps(state){
   return {
     isFetching: state.children.isFetching,
     children: state.children.children || [],
+    user: state.user.user
   };
 };
 export default connect(
-  mapStateToProps, null)(ChildrenList);
+  mapStateToProps, {setChildren})(ChildrenList);

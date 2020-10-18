@@ -87,7 +87,7 @@ const AddChild = (props) => {
   const [chores, setChores] = useState([]);
   const [child, setChild] = useState("");
   const [open, setOpen] = useState(false);
-  const id = localStorage.getItem("id");
+  // const id = localStorage.getItem("id");
   const childArrayLength = 0;
 
   const handleOpen = () => {
@@ -105,14 +105,14 @@ const AddChild = (props) => {
   const FormSubmit = async(e) => {
     e.preventDefault();
     console.log("These are values", childinfo);
-    await props.addChild(childinfo)
-    SetChildrenArray();
+    await props.addChild(childinfo, props.user.id)
+    SetChildrenArray(props.user.id);
     setChildinfo(initialValues)
     handleClose();
   };
 
-  const SetChildrenArray = async() => {
-    await props.setChildren()
+  const SetChildrenArray = async(id) => {
+    await props.setChildren(id)
   }
 
   return (
@@ -238,6 +238,7 @@ const AddChild = (props) => {
 const mapStateToProps = (state) => {
   return {
     isFetchingData: state.isFetchingData,
+    user: state.user.user
   };
 };
 

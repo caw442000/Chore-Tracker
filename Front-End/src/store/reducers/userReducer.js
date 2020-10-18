@@ -5,12 +5,14 @@ import {
   SIGNUP_USER_START,
   SIGNUP_USER_SUCCESS,
   SIGNUP_USER_FAILURE,
+  RESET_USER_SUCCESS,
 } from "../actions/userAction";
 
 export const initialState = {
   error: "",
   isFetching: false,
   user: null,
+  id: null
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -25,6 +27,7 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         isFetching: false,
         user: action.payload,
+        id: action.payload.id
       };
     case LOGIN_USER_FAILURE:
       return {
@@ -32,23 +35,30 @@ export const userReducer = (state = initialState, action) => {
         isFetching: false,
         error: action.payload,
       };
-      case SIGNUP_USER_START:
-        return {
-          ...state,
-          isFetching: true,
-        };
-      case SIGNUP_USER_SUCCESS:
-        return {
-          ...state,
-          isFetching: false,
-          user: action.payload,
-        };
-      case SIGNUP_USER_FAILURE:
-        return {
-          ...state,
-          isFetching: false,
-          error: action.payload,
-        };
+    case SIGNUP_USER_START:
+      return {
+        ...state,
+        isFetching: true,
+      };
+    case SIGNUP_USER_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        user: action.payload,
+      };
+    case SIGNUP_USER_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        error: action.payload,
+      };
+
+    case RESET_USER_SUCCESS:
+      return {
+        error: "",
+        isFetching: false,
+        user: null,
+      };
     default:
       return state;
   }

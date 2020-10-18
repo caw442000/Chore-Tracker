@@ -7,11 +7,12 @@ export const ADD_CHILD_FAILURE = "ADD_CHILD_FAILURE";
 export const SET_CHILDREN_START = "SET_CHILDREN_START";
 export const SET_CHILDREN_SUCCESS = "SET_CHILDREN_SUCCESS";
 export const SET_CHILDREN_FAILURE = "SET_CHILDREN_FAILURE";
-export const RESET_CHILDREN_SUCCESS = "RESET_CHILDREN_SUCCESS";
+export const RESET_CHILDREN_SUCCESS = "RESET_CHILDREN_SUCCESS"
 
-const id = localStorage.getItem('id');
 
-export const addChild = (values) => async (dispatch) => {
+// const id = localStorage.getItem('id');
+
+export const addChild = (values, id) => async (dispatch) => {
   dispatch({ type: ADD_CHILD_START });
   await axiosWithAuth()
   .post(`/api/auth/register/${id}`, values)
@@ -25,7 +26,9 @@ export const addChild = (values) => async (dispatch) => {
     });
 };
 
-export const setChildren = () => async (dispatch) => {
+export const setChildren = (id) => async (dispatch) => {
+
+  console.log("this is the id going to set children", id)
   dispatch({ type: SET_CHILDREN_START });
   await axiosWithAuth()
       .get(`/api/parent/children/${id}`)
@@ -42,5 +45,5 @@ export const setChildren = () => async (dispatch) => {
 };
 
 export const resetChildren = () => async (dispatch) => {
-      dispatch({ type: RESET_CHILDREN_SUCCESS});
-};
+  dispatch ({ type: RESET_CHILDREN_SUCCESS })
+}
