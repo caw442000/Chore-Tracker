@@ -1,4 +1,5 @@
 import React from "react";
+import { loadState, saveState } from './utils/localStorage'
 import FormikUserRegistrationForm from "./components/Registration";
 import "./App.css";
 import Dashboard from "./components/Dashboard";
@@ -12,7 +13,7 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import logger from 'redux-logger'
-
+import throttle from 'lodash/throttle';
 
 import { userReducer, childReducer, choreReducer } from "./store/reducers";
 
@@ -24,7 +25,15 @@ const rootReducer = combineReducers({
 })
 
 
-const store = createStore(rootReducer, applyMiddleware(thunk, logger));
+const persistedState = loadState();
+
+
+const store = createStore(rootReducer, persistedState, applyMiddleware(thunk, logger));
+
+store.subscribe(throttle(() => {
+  saveState(store.getState())
+
+}, 1000));
 
 function App() {
   return (
