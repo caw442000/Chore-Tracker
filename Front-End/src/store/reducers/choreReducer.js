@@ -26,6 +26,7 @@ export const choreReducer = (state = initialState, action) => {
       return {
         ...state,
         isFetching: false,
+        error: "",
       };
 
     case ADD_CHORE_FAILURE:
@@ -45,6 +46,7 @@ export const choreReducer = (state = initialState, action) => {
         ...state,
         isFetchingChores: false,
         chores: action.payload,
+        error: "",
       };
 
       case SET_CHORES_FAILURE:

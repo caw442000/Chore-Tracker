@@ -115,7 +115,7 @@ const ChoreList = props => {
                 ):(
                   props.chores.map(chore => (
                     <ul
-                    key={chore}
+                    key={chore.id}
                     choreid={chore.id}
                     >
                     {chore.name}

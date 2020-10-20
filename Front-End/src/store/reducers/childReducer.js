@@ -26,6 +26,7 @@ export const childReducer = (state = initialState, action) => {
       return {
         ...state,
         isFetching: false,
+        error: "",
       };
 
     case ADD_CHILD_FAILURE:
@@ -45,6 +46,7 @@ export const childReducer = (state = initialState, action) => {
         ...state,
         isFetchingChildren: false,
         children: action.payload,
+        error: "",
       };
 
       case SET_CHILDREN_FAILURE:

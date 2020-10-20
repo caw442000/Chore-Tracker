@@ -4,9 +4,6 @@ import { useHistory } from "react-router-dom";
 
 import {
   Toolbar,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
   Avatar,
   Divider,
   List,
@@ -14,12 +11,10 @@ import {
   Drawer as MUIDrawer,
 } from "@material-ui/core";
 
-import MailIcon from "@material-ui/icons/Mail";
-
 import { makeStyles } from "@material-ui/core/styles";
 
-import ChildrenList from './ChildrenList';
-import { connect } from 'react-redux';
+import ChildrenList from "./ChildrenList";
+import { connect } from "react-redux";
 
 //CSS Styles
 
@@ -76,7 +71,7 @@ const DashboardSideBar = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const pass = "pass prop";
-  console.log("state passed from map", props.children)
+  console.log("state passed from map", props.children);
 
   return (
     <MUIDrawer
@@ -89,46 +84,26 @@ const DashboardSideBar = (props) => {
     >
       <Toolbar />
       <div className={classes.drawerContainer}>
-        <Avatar
-          className={classes.avatar}
-          src=""
-          alt="Cedric Winbush Jr"
-        />
+        <Avatar className={classes.avatar} src="" alt="Family Avatar" />
         <Typography className={classes.avatarText} variant="h5">
-          Cedric Winbush Jr
+          {props?.user?.name} Family
         </Typography>
 
         <Divider />
         <List>
-
           <ChildrenList />
-          {/* {menuItems.map((lsItem, key) => (
-            <ListItem
-              button
-              key={key}
-              onClick={() => history.push(lsItem.listPath)}
-            >
-              <ListItemIcon className={classes.listItem}>
-                {lsItem.listIcon}
-              </ListItemIcon>
-              <ListItemText
-                className={classes.listItem}
-                primary={lsItem.listText}
-              />
-            </ListItem>
-          ))} */}
         </List>
       </div>
     </MUIDrawer>
   );
 };
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
   console.log("this is state", state);
   return {
     isFetching: state.children.isFetching,
     children: state.children.children || [],
+    user: state.user.user,
   };
-};
-export default connect(
-  mapStateToProps, null)(DashboardSideBar);
+}
+export default connect(mapStateToProps, {})(DashboardSideBar);

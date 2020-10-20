@@ -27,7 +27,8 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         isFetching: false,
         user: action.payload,
-        id: action.payload.id
+        id: action.payload.id,
+        error: "",
       };
     case LOGIN_USER_FAILURE:
       return {
@@ -45,6 +46,7 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         isFetching: false,
         user: action.payload,
+        error: "",
       };
     case SIGNUP_USER_FAILURE:
       return {
