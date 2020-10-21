@@ -16,6 +16,7 @@ import logger from 'redux-logger'
 import throttle from 'lodash/throttle';
 
 import { userReducer, childReducer, choreReducer } from "./store/reducers";
+import LandingPage from "./components/LandingPage";
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -45,7 +46,8 @@ function App() {
           <Switch>
             <Route exact path="/signup" component={SignUp} />
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
-            <Route path="/" component={Login} />
+            <Route path="/login" component={Login} />
+            <Route path="/" component={LandingPage} />
           </Switch>
         </Router>
 
