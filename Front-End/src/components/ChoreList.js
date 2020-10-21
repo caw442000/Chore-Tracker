@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import { connect } from "react-redux";
 
 import clsx from 'clsx';
@@ -6,7 +6,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 
@@ -64,10 +63,8 @@ const useStyles = makeStyles(theme => ({
 
 
 const ChoreList = props => {
-  const [choresList, setChoresList]= useState([]);
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
-  const id = localStorage.getItem('id')
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -90,14 +87,6 @@ const ChoreList = props => {
   const fixedNavHeightPaper = clsx(classes.navpaper, classes.fixedNavHeight);
 
   useEffect(() => {
-    // axiosWithAuth()
-    // .get(`/api/chores/${id}`)
-    // .then(res => {
-    //   console.log('After effect: ', res)
-    //   setChoresList(res.data);
-    // })
-    // .catch(err => console.log(err))
-
     props.setChores(props.user.id)
 
 
